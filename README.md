@@ -2,25 +2,6 @@
 
 # AWS EKS
 # Introduction
-Table of Contents:
-Understanding Kubernetes Fundamentals
-
-1.1 EKS vs. Self-Managed Kubernetes: Pros and Cons
-Setting up your AWS Environment for EKS
-
-2.1 Creating an AWS Account and Setting up IAM Users
-2.2 Configuring the AWS CLI and kubectl
-2.3 Preparing Networking and Security Groups for EKS
-Launching your First EKS Cluster
-
-3.1 Using the EKS Console for Cluster Creation
-3.2 Launching an EKS Cluster via AWS CLI
-3.3 Authenticating with the EKS Cluster
-Deploying Applications on EKS
-
-4.1 Containerizing Applications with Docker
-4.2 Writing Kubernetes Deployment YAMLs
-4.3 Deploying Applications to EKS: Step-by-step Guide
 ### Understanding Kubernetes Fundamentals
 #### 1.1 EKS vs. Self-Managed Kubernetes: Pros and Cons
 ##### 1.1.1 EKS (Amazon Elastic Kubernetes Service) Pros:
@@ -47,8 +28,8 @@ Cost: EKS is a managed service, and this convenience comes at a cost. Running an
 
 Less Control: While EKS provides a great deal of automation, it also means that you have less control over the underlying infrastructure and some Kubernetes configurations.
 ```
-1.1.2 Self-Managed Kubernetes on EC2 Instances Pros:
-
+##### 1.1.2 Self-Managed Kubernetes on EC2 Instances Pros:
+```
 Cost-Effective: Self-managed Kubernetes allows you to take advantage of EC2 spot instances and reserved instances, potentially reducing the overall cost of running Kubernetes clusters.
 
 Flexibility: With self-managed Kubernetes, you have full control over the cluster's configuration and infrastructure, enabling customization and optimization for specific use cases.
@@ -56,8 +37,9 @@ Flexibility: With self-managed Kubernetes, you have full control over the cluste
 EKS-Compatible: Self-managed Kubernetes on AWS can still leverage various AWS services and features, enabling integration with existing AWS resources.
 
 Experimental Features: Self-managed Kubernetes allows you to experiment with the latest Kubernetes features and versions before they are officially supported by EKS.
-Cons:
-
+```
+###### Cons:
+```
 Complexity: Setting up and managing a self-managed Kubernetes cluster can be complex and time-consuming, especially for those new to Kubernetes or AWS.
 
 Maintenance Overhead: Self-managed clusters require manual management of Kubernetes control plane updates, patches, and high availability.
@@ -67,51 +49,62 @@ Scaling Challenges: Scaling the control plane of a self-managed cluster can be c
 Security and Compliance: Self-managed clusters may require additional effort to implement best practices for security and compliance compared to EKS, which comes with some built-in security features.
 
 Lack of Automation: Self-managed Kubernetes requires more manual intervention and scripting for certain operations, which can increase the risk of human error.
-Setting up your AWS Environment for EKS
+```
+###### Setting up your AWS Environment for EKS
 Sure! Let's go into detail for each subsection:
 
-2.1 Creating an AWS Account and Setting up IAM Users
+### 2.1 Creating an AWS Account and Setting up IAM Users
 Creating an AWS account is the first step to access and utilize AWS services, including Amazon Elastic Kubernetes Service (EKS). Here's a step-by-step guide to creating an AWS account and setting up IAM users:
 
-Create an AWS Account:
+##### Create an AWS Account:
 
-Go to the AWS website (https://aws.amazon.com/) and click on the "Create an AWS Account" button.
-Follow the on-screen instructions to provide your email address, password, and required account details.
-Enter your payment information to verify your identity and set up billing.
-Access AWS Management Console:
+1. Go to the AWS website (https://aws.amazon.com/) and click on the "Create an AWS Account" button.
+2. Follow the on-screen instructions to provide your email address, password, and required account details.
+3. Enter your payment information to verify your identity and set up billing.
 
-After creating the account, you will receive a verification email. Follow the link in the email to verify your account.
-Log in to the AWS Management Console using your email address and password.
-Set up Multi-Factor Authentication (MFA) (Optional but recommended):
+##### Access AWS Management Console:
 
-Once you are logged in, set up MFA to add an extra layer of security to your AWS account. You can use MFA with a virtual MFA device or a hardware MFA device.
-Create IAM Users:
+1. After creating the account, you will receive a verification email. Follow the link in the email to verify your account.
+2. Log in to the AWS Management Console using your email address and password.
 
-Go to the IAM (Identity and Access Management) service in the AWS Management Console.
-Click on "Users" in the left-hand navigation pane and then click on "Add user."
-Enter a username for the new IAM user and select the access type (Programmatic access, AWS Management Console access, or both).
-Choose the permissions for the IAM user by adding them to one or more IAM groups or attaching policies directly.
-Optionally, set permissions boundary, tags, and enable MFA for the IAM user.
-Access Keys (for Programmatic Access):
+##### Set up Multi-Factor Authentication (MFA) (Optional but recommended):
 
-If you selected "Programmatic access" during user creation, you will receive access keys (Access Key ID and Secret Access Key).
-Store these access keys securely, as they will be used to authenticate API requests made to AWS services.
-2.2 Configuring the AWS CLI and kubectl
+1. Once you are logged in, set up MFA to add an extra layer of security to your AWS account. You can use MFA with a virtual MFA device or a hardware MFA device.
+
+##### Create IAM Users:
+
+1. Go to the IAM (Identity and Access Management) service in the AWS Management Console.
+2. Click on "Users" in the left-hand navigation pane and then click on "Add user."
+3. Enter a username for the new IAM user and select the access type (Programmatic access, AWS Management Console access, or both).
+4. Choose the permissions for the IAM user by adding them to one or more IAM groups or attaching policies directly.
+5. Optionally, set permissions boundary, tags, and enable MFA for the IAM user.
+
+##### Access Keys (for Programmatic Access):
+
+1. If you selected "Programmatic access" during user creation, you will receive access keys (Access Key ID and Secret Access Key).
+2. Store these access keys securely, as they will be used to authenticate API requests made to AWS services.
+
+#### 2.2 Configuring the AWS CLI and kubectl
 With IAM users set up, you can now configure the AWS CLI and kubectl on your local machine to interact with AWS services and EKS clusters:
 
-Installing the AWS CLI:
+###### Installing the AWS CLI:
 
-Download and install the AWS CLI on your local machine. You can find installation instructions for various operating systems here.
-Configuring AWS CLI Credentials:
+1. Download and install the AWS CLI on your local machine. You can find installation instructions for various operating systems here.
 
-Open a terminal or command prompt and run the following command:
+###### Configuring AWS CLI Credentials:
+
+1. Open a terminal or command prompt and run the following command:
+```
 aws configure
-Enter the access key ID and secret access key of the IAM user you created earlier.
-Choose a default region and output format for AWS CLI commands.
-Installing kubectl:
+```
+2. Enter the access key ID and secret access key of the IAM user you created earlier.
+3. Choose a default region and output format for AWS CLI commands.
 
-Install kubectl on your local machine. Instructions can be found here.
-Configuring kubectl for EKS:
+###### Installing kubectl:
+
+1. Install kubectl on your local machine. Instructions can be found here.
+
+###### Configuring kubectl for EKS:
 
 Once kubectl is installed, you need to configure it to work with your EKS cluster.
 In the AWS Management Console, go to the EKS service and select your cluster.
